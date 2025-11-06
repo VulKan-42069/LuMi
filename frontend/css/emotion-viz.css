@@ -1,0 +1,518 @@
+/* Emotion Visualization Styles */
+
+/* Emotion Panel */
+.emotion-panel {
+  width: 400px;
+  background: var(--white);
+  border-left: 1px solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+  position: relative;
+  z-index: 35;
+  transition: transform var(--transition);
+}
+
+.emotion-panel.collapsed {
+  transform: translateX(100%);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-4) var(--spacing-6);
+  border-bottom: 1px solid var(--gray-200);
+  background: var(--gray-50);
+}
+
+.panel-header h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--gray-800);
+  margin: 0;
+}
+
+.panel-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.panel-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.panel-content::-webkit-scrollbar-track {
+  background: var(--gray-100);
+}
+
+.panel-content::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: var(--radius-full);
+}
+
+/* Emotion Widgets */
+.emotion-widget {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.emotion-widget h4 {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--gray-800);
+  margin: 0 0 var(--spacing-3) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.emotion-widget h4::before {
+  content: '';
+  width: 3px;
+  height: 1rem;
+  background: var(--primary-color);
+  border-radius: var(--radius-full);
+}
+
+/* Emotion Gauge */
+.emotion-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.emotion-gauge {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.gauge-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.emotion-name {
+  display: block;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: var(--spacing-1);
+}
+
+.emotion-score {
+  display: block;
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* Radar Chart */
+.radar-chart-container {
+  position: relative;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.radar-chart-container canvas {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Timeline Chart */
+.timeline-chart-container {
+  position: relative;
+  height: 200px;
+  width: 100%;
+}
+
+.timeline-chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Personality Bars */
+.personality-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.personality-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.personality-label {
+  min-width: 80px;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--gray-700);
+  text-transform: capitalize;
+}
+
+.personality-bar-container {
+  flex: 1;
+  height: 8px;
+  background: var(--gray-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.personality-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-slow);
+  position: relative;
+}
+
+.personality-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    transparent 100%);
+  animation: barShine 2s ease-in-out infinite;
+}
+
+@keyframes barShine {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+.personality-value {
+  min-width: 40px;
+  text-align: right;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--gray-600);
+}
+
+/* Statistics Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: var(--spacing-4);
+}
+
+.stat-item {
+  text-align: center;
+  padding: var(--spacing-3);
+  background: var(--gray-50);
+  border-radius: var(--radius);
+  border: 1px solid var(--gray-200);
+  transition: all var(--transition);
+}
+
+.stat-item:hover {
+  background: var(--primary-light);
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.stat-value {
+  display: block;
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-1);
+}
+
+.stat-label {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--gray-600);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Emotion Color Mapping */
+.emotion-joy { color: var(--joy); }
+.emotion-sadness { color: var(--sadness); }
+.emotion-anger { color: var(--anger); }
+.emotion-fear { color: var(--fear); }
+.emotion-surprise { color: var(--surprise); }
+.emotion-disgust { color: var(--disgust); }
+.emotion-anxiety { color: var(--anxiety); }
+.emotion-confidence { color: var(--confidence); }
+.emotion-confusion { color: var(--confusion); }
+.emotion-curiosity { color: var(--curiosity); }
+.emotion-frustration { color: var(--frustration); }
+.emotion-excitement { color: var(--excitement); }
+.emotion-neutral { color: var(--neutral); }
+
+/* Emotion Backgrounds */
+.bg-emotion-joy { background-color: var(--joy); }
+.bg-emotion-sadness { background-color: var(--sadness); }
+.bg-emotion-anger { background-color: var(--anger); }
+.bg-emotion-fear { background-color: var(--fear); }
+.bg-emotion-surprise { background-color: var(--surprise); }
+.bg-emotion-disgust { background-color: var(--disgust); }
+.bg-emotion-anxiety { background-color: var(--anxiety); }
+.bg-emotion-confidence { background-color: var(--confidence); }
+.bg-emotion-confusion { background-color: var(--confusion); }
+.bg-emotion-curiosity { background-color: var(--curiosity); }
+.bg-emotion-frustration { background-color: var(--frustration); }
+.bg-emotion-excitement { background-color: var(--excitement); }
+.bg-emotion-neutral { background-color: var(--neutral); }
+
+/* Emotion Intensity Levels */
+.emotion-intensity-low { opacity: 0.4; }
+.emotion-intensity-medium { opacity: 0.7; }
+.emotion-intensity-high { opacity: 1.0; }
+
+/* Real-time Updates */
+.emotion-update {
+  animation: emotionUpdate 0.5s ease-in-out;
+}
+
+@keyframes emotionUpdate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Emotion Transition Effects */
+.emotion-transition {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Floating Emotions */
+.emotion-float {
+  position: absolute;
+  pointer-events: none;
+  font-size: var(--font-size-lg);
+  animation: floatUp 3s ease-out forwards;
+  z-index: 100;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px) scale(1.2);
+  }
+}
+
+/* Emotion Heatmap */
+.emotion-heatmap {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--spacing-1);
+  padding: var(--spacing-2);
+}
+
+.heatmap-cell {
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--white);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-md);
+}
+
+.heatmap-cell.active {
+  animation: heatmapPulse 1s ease-in-out;
+}
+
+@keyframes heatmapPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* Emotion Calendar */
+.emotion-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--spacing-1);
+  margin-bottom: var(--spacing-3);
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--gray-600);
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.calendar-day:hover {
+  background: var(--gray-200);
+}
+
+.calendar-day.has-emotion {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.calendar-day.today {
+  background: var(--primary-color);
+  color: var(--white);
+  border-color: var(--primary-color);
+}
+
+/* Responsive Design for Emotion Panel */
+@media (max-width: 1024px) {
+  .emotion-panel {
+    width: 350px;
+  }
+  
+  .emotion-gauge {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .radar-chart-container {
+    height: 200px;
+  }
+  
+  .timeline-chart-container {
+    height: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .emotion-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 320px;
+    z-index: 50;
+    box-shadow: var(--shadow-xl);
+  }
+  
+  .panel-header {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+  
+  .panel-content {
+    padding: var(--spacing-3);
+  }
+  
+  .emotion-widget {
+    padding: var(--spacing-3);
+  }
+  
+  .emotion-gauge {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .emotion-name {
+    font-size: var(--font-size-base);
+  }
+  
+  .emotion-score {
+    font-size: var(--font-size-xl);
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .emotion-panel {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--gray-200);
+  }
+  
+  .personality-label {
+    min-width: 60px;
+    font-size: var(--font-size-xs);
+  }
+  
+  .personality-value {
+    min-width: 30px;
+    font-size: var(--font-size-xs);
+  }
+  
+  .stat-value {
+    font-size: var(--font-size-lg);
+  }
+  
+  .stat-label {
+    font-size: 0.625rem;
+  }
+}
+
+/* Dark Mode Adjustments */
+@media (prefers-color-scheme: dark) {
+  .emotion-panel {
+    background: var(--gray-800);
+    border-left-color: var(--gray-700);
+  }
+  
+  .panel-header {
+    background: var(--gray-700);
+    border-bottom-color: var(--gray-600);
+  }
+  
+  .emotion-widget {
+    background: var(--gray-700);
+    border-color: var(--gray-600);
+  }
+  
+  .personality-bar-container {
+    background: var(--gray-600);
+  }
+  
+  .stat-item {
+    background: var(--gray-700);
+    border-color: var(--gray-600);
+  }
+  
+  .stat-item:hover {
+    background: var(--primary-dark);
+  }
+}

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuMi - AI Companion with Psychological Insights</title>
+    
+    <!-- Chart.js for emotion visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="css/emotion-viz.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <h1>LuMi</h1>
+                    <span class="subtitle">AI Companion</span>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-icon" id="settingsBtn" title="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <button class="btn btn-icon" id="profileBtn" title="Profile">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Chat Section -->
+            <div class="chat-section">
+                <!-- Conversation List -->
+                <aside class="conversation-sidebar" id="conversationSidebar">
+                    <div class="sidebar-header">
+                        <h3>Conversations</h3>
+                        <button class="btn btn-sm" id="newChatBtn">
+                            <i class="fas fa-plus"></i> New Chat
+                        </button>
+                    </div>
+                    <div class="conversation-list" id="conversationList">
+                        <!-- Conversations will be loaded here -->
+                    </div>
+                </aside>
+
+                <!-- Chat Interface -->
+                <div class="chat-container">
+                    <!-- Chat Header -->
+                    <div class="chat-header">
+                        <div class="current-conversation">
+                            <h3 id="currentConversationTitle">New Conversation</h3>
+                            <div class="emotion-indicator" id="currentEmotion">
+                                <span class="emotion-label">Neutral</span>
+                                <div class="emotion-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="chat-actions">
+                            <button class="btn btn-icon" id="toggleSidebarBtn" title="Toggle Sidebar">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                            <button class="btn btn-icon" id="emotionAnalysisBtn" title="Detailed Analysis">
+                                <i class="fas fa-chart-line"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Messages Area -->
+                    <div class="messages-container" id="messagesContainer">
+                        <div class="welcome-message">
+                            <div class="welcome-content">
+                                <i class="fas fa-heart"></i>
+                                <h2>Welcome to LuMi</h2>
+                                <p>Your AI companion with psychological insights. Share your thoughts and feelings, and I'll help you understand your emotions better.</p>
+                            </div>
+                        </div>
+                        <!-- Messages will be rendered here -->
+                    </div>
+
+                    <!-- Input Area -->
+                    <div class="input-section">
+                        <div class="input-container">
+                            <textarea 
+                                id="messageInput" 
+                                placeholder="Share your thoughts and feelings..."
+                                rows="1"
+                            ></textarea>
+                            <div class="input-actions">
+                                <button class="btn btn-icon" id="voiceBtn" title="Voice Input">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                <button class="btn btn-icon" id="fileBtn" title="Upload File">
+                                    <i class="fas fa-paperclip"></i>
+                                </button>
+                                <button class="btn btn-primary" id="sendBtn" title="Send Message">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emotion Analysis Panel -->
+            <div class="emotion-panel" id="emotionPanel">
+                <div class="panel-header">
+                    <h3>Emotional Analysis</h3>
+                    <button class="btn btn-icon" id="closeEmotionPanel">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="panel-content">
+                    <!-- Real-time Emotion Tracking -->
+                    <div class="emotion-widget">
+                        <h4>Current Emotion</h4>
+                        <div class="emotion-display">
+                            <div class="emotion-gauge" id="emotionGauge">
+                                <canvas id="gaugeChart"></canvas>
+                                <div class="gauge-center">
+                                    <span class="emotion-name" id="emotionName">Neutral</span>
+                                    <span class="emotion-score" id="emotionScore">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emotion Radar Chart -->
+                    <div class="emotion-widget">
+                        <h4>Emotion Profile</h4>
+                        <div class="radar-chart-container">
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Emotion Timeline -->
+                    <div class="emotion-widget">
+                        <h4>Emotion Flow</h4>
+                        <div class="timeline-chart-container">
+                            <canvas id="timelineChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Personality Insights -->
+                    <div class="emotion-widget">
+                        <h4>Personality Insights</h4>
+                        <div class="personality-bars" id="personalityBars">
+                            <!-- Personality bars will be generated here -->
+                        </div>
+                    </div>
+
+                    <!-- Emotional Statistics -->
+                    <div class="emotion-widget">
+                        <h4>Session Statistics</h4>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-value" id="totalMessages">0</span>
+                                <span class="stat-label">Messages</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="avgEmotionIntensity">0%</span>
+                                <span class="stat-label">Avg Intensity</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="dominantEmotion">-</span>
+                                <span class="stat-label">Dominant</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="modalOverlay">
+        <!-- Profile Modal -->
+        <div class="modal" id="profileModal">
+            <div class="modal-header">
+                <h3>User Profile</h3>
+                <button class="btn btn-icon close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="bio">Bio</label>
+                        <textarea id="bio" name="bio" rows="3" placeholder="Tell us about yourself..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-modal">Cancel</button>
+                <button class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div class="modal" id="settingsModal">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button class="btn btn-icon close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="settings-section">
+                    <h4>Emotion Analysis</h4>
+                    <div class="setting-item">
+                        <label for="sensitivity">Analysis Sensitivity</label>
+                        <input type="range" id="sensitivity" min="0.1" max="1" step="0.1" value="0.5">
+                        <span id="sensitivityValue">0.5</span>
+                    </div>
+                    <div class="setting-item">
+                        <label for="realTimeUpdates">Real-time Emotion Updates</label>
+                        <input type="checkbox" id="realTimeUpdates" checked>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h4>Privacy</h4>
+                    <div class="setting-item">
+                        <label for="saveConversations">Save Conversations</label>
+                        <input type="checkbox" id="saveConversations" checked>
+                    </div>
+                    <div class="setting-item">
+                        <label for="shareAnalytics">Share Anonymous Analytics</label>
+                        <input type="checkbox" id="shareAnalytics">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-modal">Cancel</button>
+                <button class="btn btn-primary" id="saveSettingsBtn">Save Settings</button>
+            </div>
+        </div>
+
+        <!-- File Upload Modal -->
+        <div class="modal" id="fileModal">
+            <div class="modal-header">
+                <h3>Upload File</h3>
+                <button class="btn btn-icon close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drag and drop your file here or click to browse</p>
+                    <p class="file-types">Supported: PDF, TXT</p>
+                    <input type="file" id="fileInput" accept=".pdf,.txt" style="display: none;">
+                    <button class="btn btn-secondary" id="browseBtn">Browse Files</button>
+                </div>
+                <div class="file-info" id="fileInfo" style="display: none;">
+                    <!-- File information will be displayed here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-modal">Cancel</button>
+                <button class="btn btn-primary" id="analyzeFileBtn" disabled>Analyze File</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p id="loadingText">Processing...</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/emotion-tracker.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/voice.js"></script>
+    <script src="js/file-upload.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
